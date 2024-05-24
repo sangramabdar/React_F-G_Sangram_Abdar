@@ -7,8 +7,10 @@ import {
   feedBackFormSchema,
 } from "../schemas/feedback-form-schema";
 import Question from "./question";
+import { useNavigate } from "react-router-dom";
 
 function FeedBackForm() {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit: handleSubmitZod,
@@ -34,7 +36,7 @@ function FeedBackForm() {
   };
 
   const handleOnSubmit = (data: FeedBackFormSchema) => {
-    console.log(data);
+    navigate("/");
   };
 
   return (
