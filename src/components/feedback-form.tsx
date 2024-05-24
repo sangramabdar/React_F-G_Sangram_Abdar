@@ -1,92 +1,41 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "./button";
 import Input from "./input";
-
-import { z } from "zod";
 import { useForm } from "react-hook-form";
-
-export const feedBackFormSchema = z.object({
-  name: z.string().min(1, "required"),
-  email: z.string().email("invalid email"),
-  phone: z.string().min(1, "Required"),
-  question1: z.string().min(1, "required"),
-});
-
-export type FeedBackFormSchema = z.infer<typeof feedBackFormSchema>;
-
-function Question({ onChange, question, error }: any) {
-  const handleOnChange = (event: any) => {
-    if (event.target.checked) return onChange(event.target.value);
-    onChange("");
-  };
-
-  return (
-    <div>
-      <h2 className="text-left">{question}</h2>
-      <div className="flex">
-        <div className="flex w-fit p-1 gap-2 justify-center items-center">
-          <Input
-            type="checkbox"
-            value={"excellent"}
-            onChange={handleOnChange}
-            label={""}
-          />
-          <label>Excellent</label>
-        </div>
-
-        <div className="flex w-fit p-1 gap-2 justify-center items-center">
-          <Input
-            type="checkbox"
-            value={"good"}
-            onChange={handleOnChange}
-            label={""}
-          />
-          <label>Good</label>
-        </div>
-
-        <div className="flex w-fit p-1 gap-2 justify-center items-center">
-          <Input
-            type="checkbox"
-            value={"fair"}
-            onChange={handleOnChange}
-            label={""}
-          />
-          <label>fair</label>
-        </div>
-
-        <div className="flex w-fit p-1 gap-2 justify-center items-center">
-          <Input
-            type="checkbox"
-            value={"bad"}
-            onChange={handleOnChange}
-            label={""}
-          />
-          <label>Bad</label>
-        </div>
-      </div>
-      {error ? (
-        <span className="text-red-600/80 mt-2 text-left block">{error}</span>
-      ) : null}
-    </div>
-  );
-}
+import {
+  FeedBackFormSchema,
+  feedBackFormSchema,
+} from "../schemas/feedback-form-schema";
+import Question from "./question";
 
 function FeedBackForm() {
   const {
     register,
     handleSubmit: handleSubmitZod,
-    formState: { errors },
+    formState,
     setValue,
     setError,
+    clearErrors,
   } = useForm<FeedBackFormSchema>({
     resolver: zodResolver(feedBackFormSchema),
   });
 
+  const errors = formState.errors;
+
+  const handleOnAnswerChange = (value: string, question: any) => {
+    if (!value) {
+      setError(question, { message: "Required" });
+      setValue(question, "");
+      return;
+    }
+
+    setValue(question, value);
+    clearErrors(question);
+  };
+
   const handleOnSubmit = (data: FeedBackFormSchema) => {
     console.log(data);
   };
-
-  console.log(errors);
 
   return (
     <div className="bg-red-200 p-2">
@@ -119,16 +68,33 @@ function FeedBackForm() {
         <Question
           question={"Question-1"}
           onChange={(value: string) => {
-            if (!value) {
-              setError("question1", { message: "Required" });
-              setValue("question1", "");
-              return;
-            }
-
-            setValue("question1", value);
-            setError("question1", { message: "" });
+            handleOnAnswerChange(value, "question1");
           }}
           error={errors.question1?.message}
+        />
+
+        <Question
+          question={"Question-2"}
+          onChange={(value: string) => {
+            handleOnAnswerChange(value, "question2");
+          }}
+          error={errors.question2?.message}
+        />
+
+        <Question
+          question={"Question-3"}
+          onChange={(value: string) => {
+            handleOnAnswerChange(value, "question3");
+          }}
+          error={errors.question3?.message}
+        />
+
+        <Question
+          question={"Question-4"}
+          onChange={(value: string) => {
+            handleOnAnswerChange(value, "question4");
+          }}
+          error={errors.question4?.message}
         />
 
         <Button type="submit" className="bg-green-500 text-white">
