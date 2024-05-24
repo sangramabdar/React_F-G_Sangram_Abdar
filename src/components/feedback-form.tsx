@@ -36,72 +36,89 @@ function FeedBackForm() {
   };
 
   const handleOnSubmit = (data: FeedBackFormSchema) => {
-    navigate("/");
+    let key = Date.now().toString();
+    localStorage.setItem(key, JSON.stringify(data));
+    navigate("/thank-you");
   };
 
   return (
-    <div className="bg-red-200 p-2">
-      <h1>Aromatic bar</h1>
-      <form onSubmit={handleSubmitZod(handleOnSubmit)}>
-        <Input
-          type="string"
-          label="Customer Name"
-          placeholder="Eg jon snow"
-          error={errors.name?.message}
-          {...register("name")}
-        />
+    <div className="">
+      <h1 className="text-left p-4 bg-secondary text-xl font-bold rounded-lg">
+        Aromatic bar
+      </h1>
+      <form
+        onSubmit={handleSubmitZod(handleOnSubmit)}
+        className="mt-6 px-4 py-6 bg-secondary"
+      >
+        <div className="flex flex-col">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-6">
+            <Input
+              type="string"
+              label="Customer Name"
+              placeholder="Eg jon snow"
+              error={errors.name?.message}
+              required
+              {...register("name")}
+            />
 
-        <Input
-          type="string"
-          label="Email"
-          placeholder="Eg abc@gmail.com"
-          error={errors.email?.message}
-          {...register("email")}
-        />
+            <Input
+              required
+              type="string"
+              label="Email"
+              placeholder="Eg abc@gmail.com"
+              error={errors.email?.message}
+              {...register("email")}
+            />
 
-        <Input
-          type="string"
-          label="Phone"
-          placeholder="9999999999"
-          error={errors.phone?.message}
-          {...register("phone")}
-        />
+            <Input
+              required
+              type="string"
+              label="Phone"
+              placeholder="9999999999"
+              error={errors.phone?.message}
+              {...register("phone")}
+            />
+          </div>
 
-        <Question
-          question={"Question-1"}
-          onChange={(value: string) => {
-            handleOnAnswerChange(value, "question1");
-          }}
-          error={errors.question1?.message}
-        />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-6 mt-12 md:mt-6">
+            <Question
+              question={
+                "Please rate the quality of the service you received from your host."
+              }
+              onChange={(value: string) => {
+                handleOnAnswerChange(value, "question1");
+              }}
+              error={errors.question1?.message}
+            />
+            <Question
+              question={"Please rate the quality of your bevarage."}
+              onChange={(value: string) => {
+                handleOnAnswerChange(value, "question2");
+              }}
+              error={errors.question2?.message}
+            />
+            <Question
+              question={"Was out restaurant clean ?"}
+              onChange={(value: string) => {
+                handleOnAnswerChange(value, "question3");
+              }}
+              error={errors.question3?.message}
+            />
+            <Question
+              question={"Please rate your overall dining experience."}
+              onChange={(value: string) => {
+                handleOnAnswerChange(value, "question4");
+              }}
+              error={errors.question4?.message}
+            />
+          </div>
+        </div>
 
-        <Question
-          question={"Question-2"}
-          onChange={(value: string) => {
-            handleOnAnswerChange(value, "question2");
-          }}
-          error={errors.question2?.message}
-        />
-
-        <Question
-          question={"Question-3"}
-          onChange={(value: string) => {
-            handleOnAnswerChange(value, "question3");
-          }}
-          error={errors.question3?.message}
-        />
-
-        <Question
-          question={"Question-4"}
-          onChange={(value: string) => {
-            handleOnAnswerChange(value, "question4");
-          }}
-          error={errors.question4?.message}
-        />
-
-        <Button type="submit" className="bg-green-500 text-white">
-          Submit Review
-        </Button>
+        <div className="flex md:justify-end">
+          <Button type="submit" className="bg-green-500 text-white mt-8">
+            Submit Review
+          </Button>
+        </div>
       </form>
     </div>
   );
