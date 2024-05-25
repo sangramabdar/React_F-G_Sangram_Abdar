@@ -1,5 +1,6 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import Button from "./button";
+import CheckMarkIcon from "./check-mark-icon";
 
 interface FieldProps {
   label: string;
@@ -8,7 +9,7 @@ interface FieldProps {
 
 function Field({ label, value }: FieldProps) {
   return (
-    <div className=" max-w-80">
+    <div className="max-w-80 space-y-1">
       <span className="block text-sm font-bold text-gray-900">{label}</span>
       <div className="font-medium py-3 px-4 block w-full border rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none focus:ring-1 focus:ring-tertiary focus:outline-none text-gray-600 focus:bg-accent/10">
         {value}
@@ -17,29 +18,15 @@ function Field({ label, value }: FieldProps) {
   );
 }
 
-function CheckMarkIcon() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth={1.5}
-      stroke="currentColor"
-      className="w-4 h-4 bg-tertiary text-white"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="m4.5 12.75 6 6 9-13.5"
-      />
-    </svg>
-  );
+interface QuestionFieldProps {
+  question: string;
+  answer: string;
 }
 
-function QuestionField({ answer, label }: any) {
+function QuestionField({ answer, question }: QuestionFieldProps) {
   return (
     <div className="flex flex-col gap-1 mt-1">
-      <span className="block text-sm font-bold text-gray-900">{label}</span>
+      <span className="block text-sm font-bold text-gray-900">{question}</span>
       <div className="flex gap-4 md:gap-6 mt-1 flex-wrap">
         <div className="flex gap-3 justify-center items-center w-fit ">
           {answer === "excellent" ? (
@@ -81,32 +68,36 @@ function QuestionField({ answer, label }: any) {
 function FormDetails() {
   let { formId } = useParams();
 
-  const formData = localStorage.getItem(formId || "");
+  const localFormData = localStorage.getItem(formId || "");
 
-  const data = JSON.parse(formData || "");
+  if (!localFormData) {
+    return <Navigate to="/" />;
+  }
+
+  const formData = JSON.parse(localFormData || "");
 
   return (
-    <div>
+    <div className="bg-secondary px-4 py-6 rounded-md">
       <h2 className="font-bold text-xl">Form Details</h2>
       <div className="flex flex-col gap-4 mt-4">
-        <Field label="Customer Name" value={data.name} />
-        <Field label="Email" value={data.email} />
-        <Field label="Phone" value={data.phone} />
+        <Field label="Customer Name" value={formData.name} />
+        <Field label="Email" value={formData.email} />
+        <Field label="Phone" value={formData.phone} />
         <QuestionField
-          label="Please rate the quality of the service you received from your host."
-          answer={data.question1}
+          question="Please rate the quality of the service you received from your host."
+          answer={formData.question1}
         />
         <QuestionField
-          label="Please rate the quality of your bevarage."
-          answer={data.question2}
+          question="Please rate the quality of your bevarage."
+          answer={formData.question2}
         />
         <QuestionField
-          label="Was out restaurant clean ?."
-          answer={data.question3}
+          question="Was out restaurant clean ?."
+          answer={formData.question3}
         />
         <QuestionField
-          label="Please rate your overall dining experience."
-          answer={data.question4}
+          question="Please rate your overall dining experience."
+          answer={formData.question4}
         />
       </div>
       <Link to="/">

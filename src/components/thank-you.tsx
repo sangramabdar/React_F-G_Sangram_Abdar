@@ -16,7 +16,7 @@ function ThankYou() {
         </p>
       </div>
       <Link to="/">
-        <Button className="bg-tertiary">Close</Button>
+        <Button className="bg-tertiary mt-6">Close</Button>
       </Link>
     </div>
   );

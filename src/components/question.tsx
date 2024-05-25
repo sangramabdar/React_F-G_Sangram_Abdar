@@ -2,12 +2,12 @@ import { useState } from "react";
 import Input from "./input";
 
 interface QuestionProps {
-  onChange: any;
+  onAnswerChange: (value: string) => void;
   question: string;
   error?: string;
 }
 
-function Question({ onChange, question, error }: QuestionProps) {
+function Question({ onAnswerChange, question, error }: QuestionProps) {
   const [checkedValue, setCheckedValue] = useState<any>(null);
 
   const handleOnChange = (event: any) => {
@@ -15,8 +15,8 @@ function Question({ onChange, question, error }: QuestionProps) {
     if (checkedValue === event.target.value) setCheckedValue(null);
     else setCheckedValue(event.target.value);
 
-    if (event.target.checked) return onChange(event.target.value);
-    onChange("");
+    if (event.target.checked) return onAnswerChange(event.target.value);
+    onAnswerChange("");
   };
 
   return (

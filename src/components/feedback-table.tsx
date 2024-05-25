@@ -13,29 +13,32 @@ import Input from "./input";
 import { getDataFromStorage } from "../utls/localstorage";
 
 function FeedBackTable() {
-  const [data, setData] = useState<any[]>([]);
-  const [selected, setSelected] = useState<string[]>([]);
+  const [rows, setRows] = useState<any[]>([]);
+  const [selectedRows, setSelectedRows] = useState<string[]>([]);
 
-  const handleOnChange = (row: any) => {
+  const handleOnSelectRow = (row: any) => {
     const key = Object.keys(row)[0];
 
-    const contains = selected.includes(key);
-    if (!contains) return selected.push(key);
+    const contains = selectedRows.includes(key);
+    if (!contains) {
+      setSelectedRows(rows => [...rows, key]);
+      return;
+    }
 
-    const filterSelected = selected.filter(localKey => localKey !== key);
-    setSelected(filterSelected);
+    const filterSelected = selectedRows.filter(localKey => localKey !== key);
+    setSelectedRows(filterSelected);
   };
 
-  const handleOnDelete = () => {
-    selected.forEach(key => {
+  const handleOnDeleteRow = () => {
+    selectedRows.forEach(key => {
       localStorage.removeItem(key);
     });
 
-    setData(getDataFromStorage());
+    setRows(getDataFromStorage());
   };
 
   useEffect(() => {
-    setData(getDataFromStorage());
+    setRows(getDataFromStorage());
   }, []);
 
   return (
@@ -43,15 +46,11 @@ function FeedBackTable() {
       <div className="flex justify-between">
         <div>
           <h2 className="font-bold text-xl">Aromatic bar</h2>
-          <div className="space-x-2">
-            <span className="text-gray-500 font-medium">
-              {data.length} records found
-            </span>
-            .<span className="text-gray-500">Text-2</span>
-          </div>
+          <span className="text-gray-500 font-medium">
+            {rows.length} records found
+          </span>
         </div>
         <div className="flex justify-center items-center gap-4">
-          {/* <div>search</div> */}
           <Link to={"/form"}>
             <Button className="bg-green-500">Add New</Button>
           </Link>
@@ -93,8 +92,8 @@ function FeedBackTable() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {data.length ? (
-              data.map(row => {
+            {rows.length ? (
+              rows.map(row => {
                 const key = Object.keys(row)[0];
                 const value = row[key];
 
@@ -105,7 +104,7 @@ function FeedBackTable() {
                         className="w-4 h-4 accent-tertiary active:ring-0 focus:ring-0"
                         type="checkbox"
                         onChange={() => {
-                          handleOnChange(row);
+                          handleOnSelectRow(row);
                         }}
                       />
                     </TableCell>
@@ -148,7 +147,7 @@ function FeedBackTable() {
       </div>
 
       <div className="flex justify-end">
-        <Button onClick={handleOnDelete} className="bg-[#ea4c89] mt-4">
+        <Button onClick={handleOnDeleteRow} className="bg-[#ea4c89] mt-4">
           Delete
         </Button>
       </div>

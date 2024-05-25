@@ -23,14 +23,14 @@ function FeedBackForm() {
     resolver: zodResolver(feedBackFormSchema),
   });
 
-  const handleOnAnswerChange = (value: string, question: any) => {
-    if (!value) {
+  const handleOnAnswerChange = (answer: string, question: any) => {
+    if (!answer) {
       setError(question, { message: "required" });
       setValue(question, "");
       return;
     }
 
-    setValue(question, value);
+    setValue(question, answer);
     clearErrors(question);
   };
 
@@ -84,28 +84,28 @@ function FeedBackForm() {
               question={
                 "Please rate the quality of the service you received from your host."
               }
-              onChange={(value: string) => {
+              onAnswerChange={(value: string) => {
                 handleOnAnswerChange(value, "question1");
               }}
               error={errors.question1?.message}
             />
             <Question
               question={"Please rate the quality of your bevarage."}
-              onChange={(value: string) => {
+              onAnswerChange={(value: string) => {
                 handleOnAnswerChange(value, "question2");
               }}
               error={errors.question2?.message}
             />
             <Question
               question={"Was out restaurant clean ?"}
-              onChange={(value: string) => {
+              onAnswerChange={(value: string) => {
                 handleOnAnswerChange(value, "question3");
               }}
               error={errors.question3?.message}
             />
             <Question
               question={"Please rate your overall dining experience."}
-              onChange={(value: string) => {
+              onAnswerChange={(value: string) => {
                 handleOnAnswerChange(value, "question4");
               }}
               error={errors.question4?.message}
