@@ -1,7 +1,13 @@
 import { useState } from "react";
 import Input from "./input";
 
-function Question({ onChange, question, error }: any) {
+interface QuestionProps {
+  onChange: any;
+  question: string;
+  error?: string;
+}
+
+function Question({ onChange, question, error }: QuestionProps) {
   const [checkedValue, setCheckedValue] = useState<any>(null);
 
   const handleOnChange = (event: any) => {
@@ -26,10 +32,9 @@ function Question({ onChange, question, error }: any) {
             type="checkbox"
             value={"excellent"}
             onChange={handleOnChange}
-            checked={"excellent" === checkedValue ? true : false}
-            label={""}
+            checked={"excellent" === checkedValue}
           />
-          <label className="text-xs font-medium">Excellent</label>
+          <span className="text-xs font-medium">Excellent</span>
         </div>
 
         <div className="flex w-fit gap-3 justify-center items-center">
@@ -38,10 +43,9 @@ function Question({ onChange, question, error }: any) {
             type="checkbox"
             value={"good"}
             onChange={handleOnChange}
-            checked={"good" === checkedValue ? true : false}
-            label={""}
+            checked={"good" === checkedValue}
           />
-          <label className="text-xs font-medium">Good</label>
+          <span className="text-xs font-medium">Good</span>
         </div>
 
         <div className="flex w-fit gap-3 justify-center items-center">
@@ -50,10 +54,9 @@ function Question({ onChange, question, error }: any) {
             type="checkbox"
             value={"fair"}
             onChange={handleOnChange}
-            checked={"fair" === checkedValue ? true : false}
-            label={""}
+            checked={"fair" === checkedValue}
           />
-          <label className="text-xs font-medium">Fair</label>
+          <span className="text-xs font-medium">Fair</span>
         </div>
 
         <div className="flex w-fit gap-3 justify-center items-center">
@@ -62,14 +65,15 @@ function Question({ onChange, question, error }: any) {
             type="checkbox"
             value={"bad"}
             onChange={handleOnChange}
-            checked={"bad" === checkedValue ? true : false}
-            label={""}
+            checked={"bad" === checkedValue}
           />
-          <label className="text-xs font-medium">Bad</label>
+          <span className="text-xs font-medium">Bad</span>
         </div>
       </div>
       {error ? (
-        <span className="text-red-600/80 text-left block mt-2">{error}</span>
+        <span className="text-red-600/80 text-left block mt-2">
+          {error.toLowerCase()}
+        </span>
       ) : null}
     </div>
   );

@@ -11,10 +11,11 @@ import { useNavigate } from "react-router-dom";
 
 function FeedBackForm() {
   const navigate = useNavigate();
+
   const {
     register,
     handleSubmit: handleSubmitZod,
-    formState,
+    formState: { errors },
     setValue,
     setError,
     clearErrors,
@@ -22,11 +23,9 @@ function FeedBackForm() {
     resolver: zodResolver(feedBackFormSchema),
   });
 
-  const errors = formState.errors;
-
   const handleOnAnswerChange = (value: string, question: any) => {
     if (!value) {
-      setError(question, { message: "Required" });
+      setError(question, { message: "required" });
       setValue(question, "");
       return;
     }

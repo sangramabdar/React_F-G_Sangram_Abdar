@@ -26,7 +26,7 @@ function FeedBackTable() {
     setSelected(filterSelected);
   };
 
-  const handleOnClick = () => {
+  const handleOnDelete = () => {
     selected.forEach(key => {
       localStorage.removeItem(key);
     });
@@ -51,7 +51,7 @@ function FeedBackTable() {
           </div>
         </div>
         <div className="flex justify-center items-center gap-4">
-          <div>search</div>
+          {/* <div>search</div> */}
           <Link to={"/form"}>
             <Button className="bg-green-500">Add New</Button>
           </Link>
@@ -62,32 +62,32 @@ function FeedBackTable() {
         <Table className="overflow-scroll">
           <TableHeader className="bg-tertiary/20">
             <TableRow className="">
-              <TableHead className="text-gray-600 font-bold  border-[0.3px] border-gray-500 text-center min-w-20 max-h-10">
+              <TableHead className="text-gray-600 font-bold border-[0.2px] border-gray-300 text-center min-w-20 max-h-10">
                 Select
               </TableHead>
-              <TableHead className="text-gray-600 font-bold  border-[0.3px] border-gray-500 text-center min-w-40 max-h-10">
+              <TableHead className="text-gray-600 font-bold  border-[0.3px] border-gray-300 text-center min-w-40 max-h-10">
                 Form Details
               </TableHead>
-              <TableHead className="text-gray-600 font-bold  border-[0.3px] border-gray-500 text-center min-w-40 max-h-10">
+              <TableHead className="text-gray-600 font-bold border-[0.3px] border-gray-300 text-center min-w-40 max-h-10">
                 Customer Name
               </TableHead>
-              <TableHead className="text-gray-600 font-bold  border-[0.3px] border-gray-500 text-center min-w-40 max-h-10">
+              <TableHead className="text-gray-600 font-bold  border-[0.3px] border-gray-300 text-center min-w-40 max-h-10">
                 Email
               </TableHead>
-              <TableHead className="text-gray-600 font-bold w-40 border-[0.3px] border-gray-500 text-center min-w-40 max-h-10">
+              <TableHead className="text-gray-600 font-bold w-40 border-[0.3px] border-gray-300 text-center min-w-40 max-h-10">
                 Phone
               </TableHead>
-              <TableHead className="text-gray-600 font-bold border-[0.3px] border-gray-500 text-center  min-w-[500px] max-h-10">
+              <TableHead className="text-gray-600 font-bold border-[0.3px] border-gray-300 text-center  min-w-[500px] max-h-10">
                 Please rate the quality of the service you received from your
                 host.
               </TableHead>
-              <TableHead className="text-gray-600 font-bold border-[0.3px] border-gray-500 text-center min-w-[320px] max-h-10">
+              <TableHead className="text-gray-600 font-bold border-[0.3px] border-gray-300 text-center min-w-[320px] max-h-10">
                 Please rate the quality of your bevarage.
               </TableHead>
-              <TableHead className="text-gray-600 font-bold border-[0.3px] border-gray-500 text-center min-w-[240px] max-h-10">
+              <TableHead className="text-gray-600 font-bold border-[0.3px] border-gray-300 text-center min-w-[240px] max-h-10">
                 Was out restaurant clean ?
               </TableHead>
-              <TableHead className="text-gray-600 font-bold border-[0.3px] border-gray-500 text-center min-w-[340px] max-h-10">
+              <TableHead className="text-gray-600 font-bold border-[0.3px] border-gray-300 text-center min-w-[340px] max-h-10">
                 Please rate your overall dining experience. ?
               </TableHead>
             </TableRow>
@@ -102,35 +102,34 @@ function FeedBackTable() {
                   <TableRow className="h-10 text-center" key={key}>
                     <TableCell className="flex justify-center items-center">
                       <Input
-                        className="w-4 h-4 mt-[-2px] accent-tertiary active:ring-0 focus:ring-0"
+                        className="w-4 h-4 accent-tertiary active:ring-0 focus:ring-0"
                         type="checkbox"
-                        label={""}
                         onChange={() => {
                           handleOnChange(row);
                         }}
                       />
                     </TableCell>
-                    <TableCell className="font-medium text-gray-500">
+                    <TableCell className="font-medium text-gray-500 border-[0.3px] border-gray-300">
                       <Link to={`/${key}`} className="text-blue-500">
                         View details
                       </Link>
                     </TableCell>
-                    <TableCell className="font-medium text-gray-500">
+                    <TableCell className="font-medium text-gray-500 border-[0.3px] border-gray-300">
                       {value.name}
                     </TableCell>
-                    <TableCell className="font-medium text-gray-500">
+                    <TableCell className="font-medium text-gray-500 border-[0.3px] border-gray-300">
                       {value.email}
                     </TableCell>
-                    <TableCell className="font-medium text-gray-500">
+                    <TableCell className="font-medium text-gray-500 border-[0.3px] border-gray-300">
                       {value.phone}
                     </TableCell>
-                    <TableCell className="font-medium text-gray-500">
+                    <TableCell className="font-medium text-gray-500 border-[0.3px] border-gray-300">
                       {value.question1}
                     </TableCell>
-                    <TableCell className="font-medium text-gray-500">
+                    <TableCell className="font-medium text-gray-500 border-[0.3px] border-gray-300">
                       {value.question2}
                     </TableCell>
-                    <TableCell className="font-medium text-gray-500">
+                    <TableCell className="font-medium text-gray-500 border-[0.3px] border-gray-300">
                       {value.question3}
                     </TableCell>
                     <TableCell className="font-medium text-gray-500">
@@ -149,7 +148,7 @@ function FeedBackTable() {
       </div>
 
       <div className="flex justify-end">
-        <Button onClick={handleOnClick} className="bg-green-500 mt-4">
+        <Button onClick={handleOnDelete} className="bg-[#ea4c89] mt-4">
           Delete
         </Button>
       </div>
